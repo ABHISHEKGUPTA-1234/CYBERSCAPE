@@ -1,1 +1,58 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="ABHISHEK GUPTA" />
+  <meta name="description" content="CYBERSCAPE" />
+  <title>CYBERSCAPE</title>
+  <link rel="icon" href="../img/icon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../styles/index.css" />
+  <script src="../scripts/index.js" defer></script>
+</head>
+<body>
+  <h1>CYBERSCAPE</h1>
+  <div id="welcome-overlay">
+    <div id="welcome-box">
+      <h2 id="welcome-title">WELCOME TO CYBERSCAPE</h2>
+      <p id="welcome-description">
+        RULES :-<br/>
+        CENTRAL HUB IS THE ORANGE COLOUR STRUCTURE<br/>
+        BASE STATION IS THE BLUE COLOUR STRUCTURE<br/>
+        COLLECT THE KEYS AND GO TO CENTRAL HUB TO CONVERT IT INTO THE SHARD<br/>
+        EVERY SHARD REQUIRES 5 KEYS<br/>
+        FROM TWO SHARD YOU CAN INCREASE THE SYSTEM HEALTH BY 5% AND PLAYER HEALTH BY 10%<br/>
+        YOU WIN IF SYSTEM HEALTH REACHES 100%<br/>
+        YOU WILL LOSE IF PLAYER HEALTH OR SYSTEM HEALTH BECOMES 0<br/>
+        SURVEILLANCE TOWER CAN BE DESTROYED BY BULLETS AFTER 3 HITS<br/>
+        BUILDINGS CAN BE DESTROYED BY BULLETS AFTER 2 HITS<br/>
+        CENTRAL HUB AND BASE STATION CANNOT BE DESTROYED<br/>
+      </p>
+      <button id="continue-button">CONTINUE</button>
+    </div>
+  </div>
+  <div id="status">
+    <div id="key">KEYS : 0</div>
+    <div id="shard">SHARDS : 0</div>
+    <div id="a">SYSTEM HEALTH :</div>
+    <div id="system-health-container">
+      <div id="system-health-bar"></div>
+    </div>
+    <div id="b">PLAYER HEALTH :</div>
+    <div id="player-health-container">
+      <div id="player-health-bar"></div>
+    </div>
+  </div>
+  </br>
+  <div id="timer">TIME: 00:00</div>
+  </br>
+  <canvas></canvas>
+  </br>
+  <div class="controls">
+    <button id="pause" onclick="pause()">PAUSE</button>
+    <button id="resume" onclick="resume()">RESUME</button>
+    <button id="reset" onclick="reset()">RESET</button>
+  </div>
+  </br>
+</body>
+</html>
