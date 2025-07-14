@@ -493,7 +493,6 @@ function updatePosition() {
 
             currentSystemHealth = Math.min(maxSystemHealth, currentSystemHealth + maxSystemHealth * 0.05 * healings);
             currentHealth = Math.min(maxHealth, currentHealth + maxHealth * 0.10 * healings);
-            console.log(`Healed: +${maxSystemHealth * 0.05 * healings} system, +${maxHealth * 0.10 * healings} player`);
             playSound(healSound);
             updateHealthBar(playerHealthBar, currentHealth, maxHealth);
             updateHealthBar(systemHealthBar, currentSystemHealth, maxSystemHealth);
@@ -764,7 +763,6 @@ function animate(timestamp) {
                 if (isNaN(bestWinTime) || effectiveWinTime < bestWinTime) {
                     bestWinTime = effectiveWinTime;
                     localStorage.setItem('bestWinTime', bestWinTime);
-                    console.log("✅ New Best Time Saved:", formatTime(bestWinTime));
                 }
 
                 setTimeout(() => {
