@@ -11,13 +11,13 @@ let maxSystemHealth = 100;
 let currentSystemHealth = 70;
 let shardsCollected = 0;
 let keysCollected = 0;
-let pauseStartTime = null; ///
-let totalPausedTime = 0; ///
-let lastHealthUpdateTime = null; ///
-let lastBlinkTime = 0; ///
-let isDangerSoundPlaying = false; ///
-let blinkOn = false; ///
-let dangerBlink = false; ///
+let pauseStartTime = null;
+let totalPausedTime = 0;
+let lastHealthUpdateTime = null;
+let lastBlinkTime = 0; 
+let isDangerSoundPlaying = false; 
+let blinkOn = false; 
+let dangerBlink = false;
 let lastDirection = { x: 0, y: -1 };
 let arcAngle = 0;
 const bullets = [];
@@ -213,7 +213,7 @@ function drawScene() {
     keysOnMap.forEach(key => {
         c.beginPath();
         c.arc(key.x, key.y, key.radius, 0, Math.PI * 2);
-        c.fillStyle = 'red';
+        c.fillStyle = 'yellow';
         c.fill();
         c.closePath();
     });
@@ -423,6 +423,7 @@ function updateBullets() {
                 }
                 const norm = getPolygonNormal(bullet, building.vertices);
                 const dot = bullet.vx * norm.x + bullet.vy * norm.y;
+                //Reflected vector = Original vector − 2 × (dot product) × normal vector
                 bullet.vx -= 2 * dot * norm.x;
                 bullet.vy -= 2 * dot * norm.y;
                 playSound(bounceSound);
@@ -483,7 +484,26 @@ function updateBullets() {
                 const inAngle = normStart < normEnd
                     ? normalizedAngle >= normStart && normalizedAngle <= normEnd
                     : normalizedAngle >= normStart || normalizedAngle <= normEnd;
-                if (dist <= arc.radius && inAngle) {
+                const innerRadius = arc.radius - 3;
+                const inArcRing = dist >= innerRadius && dist <= arc.radius;
+                const edgeHit = inArcRing && inAngle;
+                const leftAngle = start;
+                const rightAngle = end;
+                const leftPt = {
+                    x: arc.x + arc.radius * Math.cos(leftAngle),
+                    y: arc.y + arc.radius * Math.sin(leftAngle)
+                };
+                const rightPt = {
+                    x: arc.x + arc.radius * Math.cos(rightAngle),
+                    y: arc.y + arc.radius * Math.sin(rightAngle)
+                };
+                const bulletPos = { x: bullet.x, y: bullet.y };
+                const closestToLeft = getClosestPointOnSegment(bulletPos, arc, leftPt);
+                const closestToRight = getClosestPointOnSegment(bulletPos, arc, rightPt);
+                const distToLeft = Math.hypot(bullet.x - closestToLeft.x, bullet.y - closestToLeft.y);
+                const distToRight = Math.hypot(bullet.x - closestToRight.x, bullet.y - closestToRight.y);
+                const sideHit = distToLeft <= bullet.radius || distToRight <= bullet.radius;
+                if (edgeHit || sideHit) {
                     if (!bullet.hitArcs.has(arc)) {
                         arc.hits++;
                         bullet.hitArcs.add(arc);
@@ -492,8 +512,33 @@ function updateBullets() {
                             arc.visible = false;
                         }
                     }
-                    bullet.vx = -bullet.vx;
-                    bullet.vy = -bullet.vy;
+                    let norm;
+                    if (sideHit && !edgeHit) {
+                        if (distToLeft < distToRight) {
+                            const edge = {
+                                x: leftPt.x - arc.x,
+                                y: leftPt.y - arc.y
+                            };
+                            const len = Math.hypot(edge.x, edge.y);
+                            norm = { x: -edge.y / len, y: edge.x / len };
+                        } else {
+                            const edge = {
+                                x: rightPt.x - arc.x,
+                                y: rightPt.y - arc.y
+                            };
+                            const len = Math.hypot(edge.x, edge.y);
+                            norm = { x: -edge.y / len, y: edge.x / len };
+                        }
+                    } 
+                    else {
+                        norm = {
+                            x: dx / dist,
+                            y: dy / dist
+                        };
+                    }
+                    const dot = bullet.vx * norm.x + bullet.vy * norm.y;
+                    bullet.vx -= 2 * dot * norm.x;
+                    bullet.vy -= 2 * dot * norm.y;
                     playSound(bounceSound);
                     bullet.speed = Math.max(0.5, bullet.speed - 0.5);
                     const len = Math.hypot(bullet.vx, bullet.vy);
@@ -590,7 +635,8 @@ function animate(timestamp) {
             setTimeout(() => {
                 showWelcomeMessage("YOU LOSS", "GIVE IT ANOTHER TRY");
             }, 1000);
-        } else if (currentSystemHealth >= maxSystemHealth - 0.1) {
+        } 
+        else if (currentSystemHealth >= maxSystemHealth - 0.1) {
             currentSystemHealth = maxSystemHealth;
             updateHealthBar(systemHealthBar, currentSystemHealth, maxSystemHealth);
             isPaused = true;
@@ -636,7 +682,8 @@ function animate(timestamp) {
             document.body.style.backgroundColor = blinkOn
                 ? 'rgba(255, 0, 0, 0.3)'
                 : 'white';
-        } else {
+        } 
+        else {
             document.body.style.backgroundColor = 'white';
             blinkOn = false;
         }
