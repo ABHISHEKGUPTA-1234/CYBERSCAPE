@@ -5,17 +5,14 @@ h1 {
     display: inline-block;
     text-align: center;
 }
-
 h1:hover {
     animation: glow 2s;
 }
-
 @keyframes glow {
-50% {
+  50% {
     box-shadow: 0px 0px 50px hsl(120, 97%, 35%);
+  }
 }
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -25,20 +22,17 @@ body {
     align-items: center;
     font-family: sans-serif;
 }
-
 canvas {
     display: block;
     margin-top: 20px;
     border: 2px solid white;
 }
-
 .controls {
     margin-top: 20px;
     display: flex;
     gap: 12px;
     justify-content: center;
 }
-
 button {
     padding: 8px 16px;
     font-size: 16px;
@@ -49,11 +43,9 @@ button {
     border-radius: 5px;
     transition: background 0.2s;
 }
-
 button:hover {
-    background-color: #555;
+  background-color: #555;
 }
-
 .key{
     position: absolute;
     top: 20px;
@@ -66,8 +58,6 @@ button:hover {
     border-radius: 8px;
     z-index: 10;
 }
-
-
 #status {
   display: flex;
   align-items: center;
@@ -75,21 +65,17 @@ button:hover {
   margin-left: 20px;
   margin-top: 10px;
 }
-
 #timer {
   top: 10px;
   right: 20px;
   font-size: 20px;
   color: rgb(0, 0, 0);
 }
-
 #key,#shard,#a,#b,#timer {
   font-size: 20px;
   font-weight: bold;
   color: rgb(9, 36, 208);
 }
-
-
 #player-health-container,#system-health-container {
   width: 200px;
   height: 20px;
@@ -99,7 +85,6 @@ button:hover {
   border-radius: 5px;
   overflow: hidden;
 }
-
 #player-health-bar,
 #system-health-bar {
   height: 100%;
@@ -107,7 +92,6 @@ button:hover {
   background-color: limegreen;
   transition: width 0.3s linear;
 }
-/* Fullscreen Welcome Overlay */
 #welcome-overlay {
   position: fixed;
   top: 0;
@@ -122,7 +106,6 @@ button:hover {
   flex-direction: column;
   z-index: 9999;
 }
-
 #welcome-box {
   text-align: center;
   padding: 30px 50px;
@@ -131,18 +114,15 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 0 20px lime;
 }
-
 #welcome-box h2 {
   font-size: 3vw;
   margin-bottom: 20px;
 }
-
 #welcome-box p {
   font-size: 1.2vw;
   margin-bottom: 25px;
   color: white;
 }
-
 #welcome-box button {
   padding: 10px 30px;
   font-size: 1.2vw;
@@ -154,8 +134,6 @@ button:hover {
   font-weight: bold;
   transition: background 0.3s ease;
 }
-
 #welcome-box button:hover {
   background-color: rgb(132, 249, 74);
 }
-
